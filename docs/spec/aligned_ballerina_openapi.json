@@ -1,0 +1,1802 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "WebScraping.AI",
+        "description": "WebScraping.AI scraping API provides LLM-powered tools with Chromium JavaScript rendering, rotating proxies, and built-in HTML parsing.",
+        "contact": {
+            "name": "WebScraping.AI Support",
+            "url": "https://webscraping.ai",
+            "email": "support@webscraping.ai"
+        },
+        "version": "3.2.2"
+    },
+    "servers": [
+        {
+            "url": "https://api.webscraping.ai"
+        }
+    ],
+    "security": [
+        {
+            "api_key": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "AI",
+            "description": "Analyze web pages using LLMs"
+        },
+        {
+            "name": "HTML",
+            "description": "Get full HTML content of pages using proxies and Chromium JS rendering"
+        },
+        {
+            "name": "Text",
+            "description": "Get visible text of pages using proxies and Chromium JS rendering"
+        },
+        {
+            "name": "Selected HTML",
+            "description": "Get HTML content of selected page areas (like price, search results, page title, etc.)"
+        },
+        {
+            "name": "SERP",
+            "description": "Get parsed search engine results (Google) by query"
+        },
+        {
+            "name": "Structured Data",
+            "description": "Get structured JSON for a page on a supported site (YouTube, TikTok, X, LinkedIn, Instagram, Reddit, and more over time)"
+        },
+        {
+            "name": "Account",
+            "description": "Information about your account API credits quota"
+        }
+    ],
+    "paths": {
+        "/ai/question": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Get an answer to a question about a given web page",
+                "description": "Returns the answer in plain text. Proxies and Chromium JavaScript rendering are used for page retrieval and processing, then the answer is extracted using an LLM model.",
+                "operationId": "getAnswer",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/url"
+                    },
+                    {
+                        "$ref": "#/components/parameters/question"
+                    },
+                    {
+                        "$ref": "#/components/parameters/headers"
+                    },
+                    {
+                        "$ref": "#/components/parameters/timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/wait_for"
+                    },
+                    {
+                        "$ref": "#/components/parameters/proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/country"
+                    },
+                    {
+                        "$ref": "#/components/parameters/custom_proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/device"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_404"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_redirect"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_script"
+                    },
+                    {
+                        "$ref": "#/components/parameters/format"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved answer",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Some answer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ai/fields": {
+            "get": {
+                "tags": [
+                    "AI"
+                ],
+                "summary": "Extract structured data fields from a web page",
+                "description": "Returns structured data fields extracted from the webpage using an LLM model. Proxies and Chromium JavaScript rendering are used for page retrieval and processing.",
+                "operationId": "getFields",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/url"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Object describing fields to extract from the page and their descriptions",
+                        "required": true,
+                        "style": "deepObject",
+                        "explode": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FieldDescriptions"
+                        },
+                        "example": {
+                            "title": "Main product title",
+                            "price": "Current product price",
+                            "description": "Full product description"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/headers"
+                    },
+                    {
+                        "$ref": "#/components/parameters/timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/wait_for"
+                    },
+                    {
+                        "$ref": "#/components/parameters/proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/country"
+                    },
+                    {
+                        "$ref": "#/components/parameters/custom_proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/device"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_404"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_redirect"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_script"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved fields",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FieldsResult"
+                                },
+                                "example": {
+                                    "result": {
+                                        "title": "Example Product",
+                                        "price": "$99.99",
+                                        "description": "This is a sample product description"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/html": {
+            "get": {
+                "tags": [
+                    "HTML"
+                ],
+                "summary": "Page HTML by URL",
+                "description": "Returns the full HTML content of a webpage specified by the URL. The response is in plain text. Proxies and Chromium JavaScript rendering are used for page retrieval and processing.",
+                "operationId": "getHtml",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/url"
+                    },
+                    {
+                        "$ref": "#/components/parameters/headers"
+                    },
+                    {
+                        "$ref": "#/components/parameters/timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/wait_for"
+                    },
+                    {
+                        "$ref": "#/components/parameters/proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/country"
+                    },
+                    {
+                        "$ref": "#/components/parameters/custom_proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/device"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_404"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_redirect"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_script"
+                    },
+                    {
+                        "$ref": "#/components/parameters/return_script_result"
+                    },
+                    {
+                        "$ref": "#/components/parameters/format"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved html",
+                        "headers": {
+                            "Wsai-Request-Id": {
+                                "$ref": "#/components/headers/Wsai-Request-Id"
+                            }
+                        },
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "<html><head>\n    <title>Example Domain</title>\n</head>\n\n<body>\n<div>\n    <h1>Example Domain</h1>\n</body></html>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/text": {
+            "get": {
+                "tags": [
+                    "Text"
+                ],
+                "summary": "Page text by URL (Markdown)",
+                "description": "Converts a webpage to clean Markdown (\"URL to Markdown\") - boilerplate is stripped and the document structure (headings, lists, links) is preserved; tables come through as plain text, one paragraph per cell. Can be used to feed data to LLM models and RAG pipelines. text_format=plain (default) returns the raw Markdown; \"json\" and \"xml\" wrap the same Markdown content with the page title and description. Proxies and Chromium JavaScript rendering are used for page retrieval and processing. Returns JSON on error.",
+                "operationId": "getText",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/text_format"
+                    },
+                    {
+                        "$ref": "#/components/parameters/return_links"
+                    },
+                    {
+                        "$ref": "#/components/parameters/url"
+                    },
+                    {
+                        "$ref": "#/components/parameters/headers"
+                    },
+                    {
+                        "$ref": "#/components/parameters/timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/wait_for"
+                    },
+                    {
+                        "$ref": "#/components/parameters/proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/country"
+                    },
+                    {
+                        "$ref": "#/components/parameters/custom_proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/device"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_404"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_redirect"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_script"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved text",
+                        "headers": {
+                            "Wsai-Request-Id": {
+                                "$ref": "#/components/headers/Wsai-Request-Id"
+                            }
+                        },
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Some content"
+                            },
+                            "text/xml": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "<title>Some title</title>\n<description>Some description</description>\n<content>Some content</content>"
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "{\"title\":\"Some title\",\"description\":\"Some description\",\"content\":\"Some content\"}"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/selected": {
+            "get": {
+                "tags": [
+                    "Selected HTML"
+                ],
+                "summary": "HTML of a selected page area by URL and CSS selector",
+                "description": "Returns HTML of a selected page area by URL and CSS selector. Useful if you don't want to do the HTML parsing on your side.",
+                "operationId": "getSelected",
+                "parameters": [
+                    {
+                        "name": "selector",
+                        "in": "query",
+                        "description": "CSS selector of the page area to return. The inner HTML of the first matching element is returned; if nothing matches, the request fails with a 400 \"Element not found\"",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "h1"
+                    },
+                    {
+                        "$ref": "#/components/parameters/url"
+                    },
+                    {
+                        "$ref": "#/components/parameters/headers"
+                    },
+                    {
+                        "$ref": "#/components/parameters/timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/wait_for"
+                    },
+                    {
+                        "$ref": "#/components/parameters/proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/country"
+                    },
+                    {
+                        "$ref": "#/components/parameters/custom_proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/device"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_404"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_redirect"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_script"
+                    },
+                    {
+                        "$ref": "#/components/parameters/format"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved selected",
+                        "headers": {
+                            "Wsai-Request-Id": {
+                                "$ref": "#/components/headers/Wsai-Request-Id"
+                            }
+                        },
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "<a href=\"https://www.iana.org/domains/example\">More information...</a>"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/selected-multiple": {
+            "get": {
+                "tags": [
+                    "Selected HTML"
+                ],
+                "summary": "HTML of multiple page areas by URL and CSS selectors",
+                "description": "Returns HTML of multiple page areas by URL and CSS selectors. Useful if you don't want to do the HTML parsing on your side.",
+                "operationId": "getSelectedMultiple",
+                "parameters": [
+                    {
+                        "name": "selectors",
+                        "in": "query",
+                        "description": "Multiple CSS selectors. Repeat the parameter once per selector (selectors=h1&selectors=p); bracketed forms such as selectors[]=h1 are not recognized and return empty results",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "example": [
+                            "h1"
+                        ]
+                    },
+                    {
+                        "$ref": "#/components/parameters/url"
+                    },
+                    {
+                        "$ref": "#/components/parameters/headers"
+                    },
+                    {
+                        "$ref": "#/components/parameters/timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_timeout"
+                    },
+                    {
+                        "$ref": "#/components/parameters/wait_for"
+                    },
+                    {
+                        "$ref": "#/components/parameters/proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/country"
+                    },
+                    {
+                        "$ref": "#/components/parameters/custom_proxy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/device"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_404"
+                    },
+                    {
+                        "$ref": "#/components/parameters/error_on_redirect"
+                    },
+                    {
+                        "$ref": "#/components/parameters/js_script"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved selected multiple",
+                        "headers": {
+                            "Wsai-Request-Id": {
+                                "$ref": "#/components/headers/Wsai-Request-Id"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SelectedAreas"
+                                },
+                                "example": [
+                                    [
+                                        "Example Domain"
+                                    ],
+                                    [
+                                        "This domain is for use in documentation examples without needing permission. Avoid use in operations.",
+                                        "<a href=\"https://iana.org/domains/example\">Learn more</a>"
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/serp": {
+            "get": {
+                "tags": [
+                    "SERP"
+                ],
+                "summary": "Search engine results (SERP) by query",
+                "description": "Returns parsed search engine results for a query. The engine is selected with the `engine` parameter (currently `google`, the default). Unlike the page endpoints this is query-shaped, not URL-shaped: pass `q` (the search query) instead of `url`, and WebScraping.AI handles proxy routing and parsing. The response uses the common SERP API naming: `organic_results` items carry `position` (1-based within the page), `title`, `link`, `domain`, `displayed_link`, `snippet` and `date`; `search_information` reports the displayed query, a spelling fix and whether the page had results; `related_searches` and `pagination` complete the page. Flat pricing of 15 credits per search; failed searches are not charged. Response is JSON.\n",
+                "operationId": "getSerp",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Search query",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "coffee machines"
+                    },
+                    {
+                        "name": "engine",
+                        "in": "query",
+                        "description": "Search engine to query",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "google"
+                            ],
+                            "default": "google"
+                        }
+                    },
+                    {
+                        "name": "gl",
+                        "in": "query",
+                        "description": "Two-letter country code for geolocation of the search (Google `gl` parameter)",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "us"
+                        },
+                        "example": "us"
+                    },
+                    {
+                        "name": "hl",
+                        "in": "query",
+                        "description": "Two-letter language code for the results (Google `hl` parameter)",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "en"
+                        },
+                        "example": "en"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Results page number (10 results per page), from 1 to 100. Any other value (0, a fraction, a non-number, or above 100) is rejected with a 400 before billing",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "maximum": 100,
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved serp",
+                        "headers": {
+                            "Wsai-Request-Id": {
+                                "$ref": "#/components/headers/Wsai-Request-Id"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SerpResult"
+                                },
+                                "example": {
+                                    "search_parameters": {
+                                        "engine": "google",
+                                        "q": "coffee machines",
+                                        "gl": "us",
+                                        "hl": "en",
+                                        "page": 1
+                                    },
+                                    "search_information": {
+                                        "query_displayed": "coffee machines",
+                                        "organic_results_state": "Results for exact spelling"
+                                    },
+                                    "organic_results": [
+                                        {
+                                            "position": 1,
+                                            "title": "Best Coffee Machines of 2026",
+                                            "link": "https://www.example.com/best-coffee-machines",
+                                            "domain": "example.com",
+                                            "displayed_link": "www.example.com \u203a Reviews \u203a Coffee Machines",
+                                            "snippet": "We tested 20 coffee machines to find the best ones for every budget...",
+                                            "date": "Apr 13, 2026"
+                                        },
+                                        {
+                                            "position": 2,
+                                            "title": "Coffee Machines | Example Store",
+                                            "link": "https://shop.example.org/coffee-machines",
+                                            "domain": "shop.example.org",
+                                            "displayed_link": "shop.example.org \u203a coffee-machines"
+                                        }
+                                    ],
+                                    "related_searches": [
+                                        {
+                                            "query": "best espresso machine"
+                                        }
+                                    ],
+                                    "pagination": {
+                                        "current": 1,
+                                        "next": 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data": {
+            "get": {
+                "tags": [
+                    "Structured Data"
+                ],
+                "summary": "Structured data for a page on a supported site",
+                "description": "Returns structured JSON for a public page on a supported site, for example a YouTube video, a TikTok profile, an X post, a LinkedIn company, an Instagram reel or a Reddit thread. Pass the page's normal URL; the site (`provider`) and page kind (`type`) are detected from it, and WebScraping.AI handles fetching, proxies and parsing. The set of supported sites and page types grows on the server, so clients should not validate URLs themselves: an unsupported URL or page type is rejected with a 400 (not charged) whose message lists what is supported. The shape of `data` depends on `provider` and `type`; fields use snake_case, and fields a page doesn't expose are null (some flags come back false, and lists come back empty). Pricing is 15 credits per request (50 for Reddit), including pages that parse empty (`parse_status` `parse_failed`) or no longer exist (`not_found`); requests that fail to fetch are not charged. Response is JSON.\n",
+                "operationId": "getData",
+                "parameters": [
+                    {
+                        "name": "url",
+                        "in": "query",
+                        "description": "URL of a page on a supported site",
+                        "required": true,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    },
+                    {
+                        "name": "country",
+                        "in": "query",
+                        "description": "Two-letter country code of the proxy used to fetch the page (`us` by default). Must be one of the API's proxy countries (see the `country` parameter of the page endpoints); other values are rejected with a 400",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "us"
+                        },
+                        "example": "us"
+                    },
+                    {
+                        "name": "transcript",
+                        "in": "query",
+                        "description": "YouTube videos only. Also fetch the video's transcript into `data.transcript` (null when no matching captions are available). If the transcript fetch itself fails, the whole request fails with a 500 and is not charged",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "transcript_language",
+                        "in": "query",
+                        "description": "YouTube videos only, with `transcript=true`. Caption language to pick, e.g. `en` or `de`. Without it, English is preferred, then the first available track. If the video has no captions in that language, `data.transcript` is null",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "en",
+                        "x-ballerina-name": "transcriptLanguage"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/402"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/429"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/500"
+                    },
+                    "504": {
+                        "$ref": "#/components/responses/504"
+                    },
+                    "200": {
+                        "description": "The retrieved data",
+                        "headers": {
+                            "Wsai-Request-Id": {
+                                "$ref": "#/components/headers/Wsai-Request-Id"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DataResult"
+                                },
+                                "example": {
+                                    "request_parameters": {
+                                        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                                        "provider": "youtube",
+                                        "type": "video"
+                                    },
+                                    "parse_status": "ok",
+                                    "data": {
+                                        "video_id": "dQw4w9WgXcQ",
+                                        "title": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
+                                        "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/account": {
+            "get": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Information about your account calls quota",
+                "description": "Returns information about your account, including the remaining API credits quota, the next billing cycle start time, and the remaining concurrent requests. The response is in JSON format.",
+                "operationId": "getAccount",
+                "responses": {
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "200": {
+                        "description": "The retrieved account",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                },
+                                "example": {
+                                    "remaining_api_calls": 200000,
+                                    "remaining_monthly_credits": 200000,
+                                    "remaining_payg_credits": 100000,
+                                    "remaining_total_credits": 300000,
+                                    "resets_at": 1617073667,
+                                    "remaining_concurrency": 100
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "DataResult": {
+                "title": "Structured page data",
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "The page's fields. The shape depends on `provider` and `type`",
+                        "nullable": true,
+                        "example": {
+                            "video_id": "dQw4w9WgXcQ",
+                            "title": "Rick Astley - Never Gonna Give You Up (Official Video)",
+                            "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                        }
+                    },
+                    "parse_status": {
+                        "type": "string",
+                        "description": "`ok` when the page was parsed; `parse_failed` when the page was fetched but couldn't be parsed (`data` may be null or partial); `not_found` when the page doesn't exist. All three are successful, charged requests. Treat unknown values as an open set\n",
+                        "example": "ok",
+                        "x-ballerina-name": "parseStatus"
+                    },
+                    "request_parameters": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/DataResultRequestParameters"
+                            }
+                        ],
+                        "description": "The URL as requested and how it was classified",
+                        "x-ballerina-name": "requestParameters"
+                    }
+                },
+                "description": "Structured data extracted from a page on a supported site"
+            },
+            "Account": {
+                "title": "Account limits info",
+                "type": "object",
+                "properties": {
+                    "resets_at": {
+                        "type": "integer",
+                        "description": "Next billing cycle start time (UNIX timestamp)",
+                        "x-ballerina-name": "resetsAt"
+                    },
+                    "remaining_api_calls": {
+                        "type": "integer",
+                        "description": "Deprecated alias of remaining_monthly_credits, kept for backward compatibility",
+                        "deprecated": true,
+                        "x-ballerina-name": "remainingApiCalls"
+                    },
+                    "remaining_total_credits": {
+                        "type": "integer",
+                        "description": "Total remaining API credits (monthly + pay-as-you-go)",
+                        "x-ballerina-name": "remainingTotalCredits"
+                    },
+                    "remaining_concurrency": {
+                        "type": "integer",
+                        "description": "Remaining concurrent requests",
+                        "x-ballerina-name": "remainingConcurrency"
+                    },
+                    "remaining_payg_credits": {
+                        "type": "integer",
+                        "description": "Remaining pay-as-you-go credits, consumed after the monthly quota is exhausted (valid for 12 months after the last top-up)",
+                        "x-ballerina-name": "remainingPaygCredits"
+                    },
+                    "remaining_monthly_credits": {
+                        "type": "integer",
+                        "description": "Remaining monthly API credits on the subscription plan (does not include pay-as-you-go credits)",
+                        "x-ballerina-name": "remainingMonthlyCredits"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Your account email"
+                    }
+                },
+                "description": "Account quota and concurrency information"
+            },
+            "RelatedSearch": {
+                "description": "A related search suggestion",
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Text of the related search suggestion",
+                        "example": "best espresso machine"
+                    }
+                }
+            },
+            "SelectedAreas": {
+                "title": "HTML for selected page areas",
+                "type": "array",
+                "description": "One array per requested selector, in request order, holding the inner HTML of every element that matches it (empty when nothing matches)",
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SerpResultPagination": {
+                "type": "object",
+                "properties": {
+                    "next": {
+                        "type": "integer",
+                        "description": "The next page number. Omitted when Google offers no further page",
+                        "example": 2
+                    },
+                    "current": {
+                        "type": "integer",
+                        "description": "Current results page number",
+                        "example": 1
+                    }
+                },
+                "description": "Pagination links for the search results"
+            },
+            "OrganicResult": {
+                "description": "A single organic search result",
+                "type": "object",
+                "properties": {
+                    "snippet": {
+                        "type": "string",
+                        "description": "Result description snippet, when Google shows one",
+                        "example": "We tested 20 coffee machines to find the best ones for every budget..."
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "The date Google displays next to the snippet, as shown (absolute or relative), when present",
+                        "example": "Apr 13, 2026"
+                    },
+                    "displayed_link": {
+                        "type": "string",
+                        "description": "The breadcrumb-style URL Google displays under the title. Falls back to `domain` when Google shows none",
+                        "example": "www.example.com \u203a Reviews \u203a Coffee Machines",
+                        "x-ballerina-name": "displayedLink"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "description": "Hostname of `link` without a leading `www.`",
+                        "example": "example.com"
+                    },
+                    "link": {
+                        "type": "string",
+                        "description": "URL of the search result",
+                        "example": "https://www.example.com/best-coffee-machines"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "description": "Rank of the result within this page, starting at 1 on every page (compute `(page - 1) * 10 + position` for an absolute rank)",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the search result",
+                        "example": "Best Coffee Machines of 2026"
+                    }
+                }
+            },
+            "Error": {
+                "title": "Generic error",
+                "type": "object",
+                "properties": {
+                    "status_message": {
+                        "type": "string",
+                        "description": "Target page response HTTP status message",
+                        "x-ballerina-name": "statusMessage"
+                    },
+                    "status_code": {
+                        "type": "integer",
+                        "description": "Target page response HTTP status code (403, 500, etc)",
+                        "x-ballerina-name": "statusCode"
+                    },
+                    "next_step": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ErrorNextStep"
+                            }
+                        ],
+                        "description": "The next configuration worth trying, with its price on current plans",
+                        "x-ballerina-name": "nextStep"
+                    },
+                    "error_code": {
+                        "type": "string",
+                        "description": "Machine-readable failure class, present on 500 and 504 responses from the scraping endpoints (/html, /text, /selected, /selected-multiple, /ai/*).\n`target_blocked` (403/429/503/999 from the target), `target_challenge` (anti-bot challenge page served as content),\n`target_error` (other non-2xx status), `target_redirect` (redirect with `error_on_redirect=true`),\n`target_unreachable` (DNS failure or connection closed during TLS), `invalid_url`, `forbidden_target`,\n`custom_proxy_error` (your custom_proxy returned 407), `wait_for_timeout`, `response_too_large`, `timeout` (504), `internal_error`\n",
+                        "enum": [
+                            "target_blocked",
+                            "target_challenge",
+                            "target_error",
+                            "target_redirect",
+                            "target_unreachable",
+                            "invalid_url",
+                            "forbidden_target",
+                            "custom_proxy_error",
+                            "wait_for_timeout",
+                            "response_too_large",
+                            "timeout",
+                            "internal_error"
+                        ],
+                        "x-ballerina-name": "errorCode"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Error description"
+                    },
+                    "body": {
+                        "type": "string",
+                        "description": "Target page response body preview (first 500 characters), when the target returned one"
+                    },
+                    "request_parameters": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ErrorRequestParameters"
+                            }
+                        ],
+                        "description": "The configuration the failed request ran with",
+                        "x-ballerina-name": "requestParameters"
+                    }
+                },
+                "description": "Error details returned by the API"
+            },
+            "DataResultRequestParameters": {
+                "type": "object",
+                "properties": {
+                    "provider": {
+                        "type": "string",
+                        "description": "The detected site, e.g. `youtube`, `tiktok`, `twitter`, `linkedin`, `instagram` or `reddit`. New sites are added over time, so treat this as an open set",
+                        "example": "youtube"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The detected page kind within the site, e.g. `video`, `channel`, `playlist`, `profile`, `post`, `company` or `job`. Also an open set",
+                        "example": "video"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "The URL that was requested",
+                        "example": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    }
+                },
+                "description": "The URL as requested and how it was classified"
+            },
+            "SerpResult": {
+                "title": "Search engine results",
+                "type": "object",
+                "properties": {
+                    "pagination": {
+                        "$ref": "#/components/schemas/SerpResultPagination"
+                    },
+                    "organic_results": {
+                        "type": "array",
+                        "description": "Organic (non-ad) search results, in rank order",
+                        "items": {
+                            "$ref": "#/components/schemas/OrganicResult"
+                        },
+                        "x-ballerina-name": "organicResults"
+                    },
+                    "related_searches": {
+                        "type": "array",
+                        "description": "Google's \"Related searches\" suggestions for this query. Omitted when the page shows none",
+                        "items": {
+                            "$ref": "#/components/schemas/RelatedSearch"
+                        },
+                        "x-ballerina-name": "relatedSearches"
+                    },
+                    "search_information": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/SerpResultSearchInformation"
+                            }
+                        ],
+                        "description": "Information the search engine reported about the search itself",
+                        "x-ballerina-name": "searchInformation"
+                    },
+                    "search_parameters": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/SerpResultSearchParameters"
+                            }
+                        ],
+                        "description": "The normalized parameters the search was run with",
+                        "x-ballerina-name": "searchParameters"
+                    }
+                },
+                "description": "Parsed search engine results page"
+            },
+            "SerpResultSearchParameters": {
+                "type": "object",
+                "properties": {
+                    "q": {
+                        "type": "string",
+                        "description": "Search query",
+                        "example": "coffee machines"
+                    },
+                    "hl": {
+                        "type": "string",
+                        "description": "Language code of the results",
+                        "example": "en"
+                    },
+                    "engine": {
+                        "type": "string",
+                        "description": "Search engine the query was run on",
+                        "example": "google"
+                    },
+                    "gl": {
+                        "type": "string",
+                        "description": "Country code the search was run for",
+                        "example": "us"
+                    },
+                    "page": {
+                        "type": "integer",
+                        "description": "Results page number",
+                        "example": 1
+                    }
+                },
+                "description": "The normalized parameters the search was run with"
+            },
+            "ErrorNextStep": {
+                "type": "object",
+                "properties": {
+                    "cost": {
+                        "type": "integer",
+                        "description": "Credits per request with those parameters on current plans"
+                    },
+                    "params": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Parameters to add to (or change on) the retried request"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Human-readable version of the suggestion"
+                    },
+                    "remove": {
+                        "type": "array",
+                        "description": "Parameters to drop from the retried request (present when the failed request used custom_proxy, which otherwise overrides any proxy setting)",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": "The next configuration worth trying, with its price on current plans. Absent when the request already used the strongest configuration (stealth or a dedicated route), when a retry would not help (bad URL, site's own 4xx), or for Google search URLs (use /serp instead)"
+            },
+            "FieldDescriptions": {
+                "description": "Descriptions of the fields to extract, keyed by field name",
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Description of the page title to extract"
+                    }
+                },
+                "additionalProperties": {
+                    "type": "string"
+                }
+            },
+            "SerpResultSearchInformation": {
+                "type": "object",
+                "properties": {
+                    "query_displayed": {
+                        "type": "string",
+                        "description": "The query the results are for. Equals `q` unless Google applied a spelling fix",
+                        "example": "coffee machines",
+                        "x-ballerina-name": "queryDisplayed"
+                    },
+                    "showing_results_for": {
+                        "type": "string",
+                        "description": "The auto-corrected query, present only when Google applied a spelling fix",
+                        "example": "coffee machines",
+                        "x-ballerina-name": "showingResultsFor"
+                    },
+                    "organic_results_state": {
+                        "type": "string",
+                        "description": "`Results for exact spelling` when organic results are present for `q`; `Empty showing fixed spelling results` when Google auto-corrected the query and the results are for the corrected one (see `showing_results_for`); `Fully empty` when the page had no organic results (a real empty result page is a successful, billed search)\n",
+                        "example": "Results for exact spelling",
+                        "enum": [
+                            "Results for exact spelling",
+                            "Empty showing fixed spelling results",
+                            "Fully empty"
+                        ],
+                        "x-ballerina-name": "organicResultsState"
+                    }
+                },
+                "description": "What Google reported about the search itself"
+            },
+            "ErrorRequestParameters": {
+                "type": "object",
+                "properties": {
+                    "proxy": {
+                        "type": "string",
+                        "description": "Proxy tier used. For `proxy=auto` this is the tier the walk ended on",
+                        "enum": [
+                            "datacenter",
+                            "residential",
+                            "stealth",
+                            "custom",
+                            "dedicated"
+                        ]
+                    },
+                    "auto": {
+                        "type": "boolean",
+                        "description": "Present (true) when the request used `proxy=auto`"
+                    },
+                    "js": {
+                        "type": "boolean",
+                        "description": "Whether JavaScript rendering was enabled"
+                    },
+                    "tiers_tried": {
+                        "type": "array",
+                        "description": "For `proxy=auto`, the tiers walked in order before giving up",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "datacenter",
+                                "residential",
+                                "stealth"
+                            ]
+                        },
+                        "x-ballerina-name": "tiersTried"
+                    }
+                },
+                "description": "The configuration the failed request ran with. Present on target-side errors (blocked, challenge, non-2xx, connection closed, wait_for), not on request-validation errors"
+            },
+            "FieldsResult": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "description": "The extracted fields, keyed by the requested field names. A field the page doesn't contain is null"
+                    }
+                },
+                "description": "Fields extracted from the web page, keyed by field name"
+            }
+        },
+        "responses": {
+            "400": {
+                "description": "Parameters validation error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        },
+                        "example": {
+                            "message": "Invalid CSS selector"
+                        }
+                    }
+                }
+            },
+            "402": {
+                "description": "Out of API credits \u2014 upgrade your plan or top up your pay-as-you-go balance on https://webscraping.ai/dashboard/billing",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        },
+                        "example": {
+                            "message": "Your requests quota is exceeded. Please upgrade your plan or top up your PAYG balance on https://webscraping.ai/dashboard/billing, or wait until 2026-09-01."
+                        }
+                    }
+                }
+            },
+            "403": {
+                "description": "Wrong or missing API key. Get a key at https://webscraping.ai/dashboard",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        },
+                        "example": {
+                            "message": "Wrong API key."
+                        }
+                    }
+                }
+            },
+            "429": {
+                "description": "Too many concurrent requests for your plan. Wait for a running request to finish and retry, or upgrade for a higher limit.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        },
+                        "example": {
+                            "message": "Too many concurrent requests, wait or upgrade your plan. Your current limit is 2."
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "The target page could not be scraped (blocked, anti-bot challenge, non-2xx status, DNS failure) or an unexpected error occurred. Failed requests are not billed (the one exception is a redirect returned because of `error_on_redirect=true`, which is a successful outcome you asked for).\nFailures on the scraping endpoints (/html, /text, /selected, /selected-multiple, /ai/*) carry a machine-readable `error_code` and, when a better configuration exists, a `next_step` with the parameters to retry with and their credit cost. /serp and /data have their own error envelopes.\n",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        },
+                        "example": {
+                            "message": "The target website returned HTTP 403 (Forbidden) through a datacenter proxy: it is blocking this IP pool (anti-bot protection). Retry with proxy=residential (10 credits per request). Failed requests are not billed.",
+                            "error_code": "target_blocked",
+                            "status_code": 403,
+                            "status_message": "Forbidden",
+                            "body": "<html><body>Access denied</body></html>",
+                            "request_parameters": {
+                                "proxy": "datacenter",
+                                "js": false
+                            },
+                            "next_step": {
+                                "params": {
+                                    "proxy": "residential"
+                                },
+                                "cost": 10,
+                                "message": "Retry with proxy=residential (10 credits per request)."
+                            }
+                        }
+                    }
+                }
+            },
+            "504": {
+                "description": "Timeout error, try increasing timeout parameter value",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/Error"
+                        },
+                        "example": {
+                            "message": "Timeout error, try increasing timeout parameter value",
+                            "error_code": "timeout"
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "url": {
+                "name": "url",
+                "in": "query",
+                "description": "URL of the target page",
+                "required": true,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "https://example.com"
+            },
+            "headers": {
+                "name": "headers",
+                "in": "query",
+                "description": "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})",
+                "required": false,
+                "style": "deepObject",
+                "explode": true,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "Cookie": {
+                            "type": "string",
+                            "description": "Cookie header value to send to the target page"
+                        }
+                    },
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "Cookie": "session=some_id"
+                }
+            },
+            "timeout": {
+                "name": "timeout",
+                "in": "query",
+                "description": "Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 25000; larger values are capped at 25000)",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "maximum": 25000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "default": 10000
+                },
+                "example": 10000
+            },
+            "js": {
+                "name": "js",
+                "in": "query",
+                "description": "Execute on-page JavaScript using a headless browser (true by default)",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "example": true
+            },
+            "js_timeout": {
+                "name": "js_timeout",
+                "in": "query",
+                "description": "Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "maximum": 20000,
+                    "minimum": 1,
+                    "type": "integer",
+                    "default": 2000
+                },
+                "example": 2000,
+                "x-ballerina-name": "jsTimeout"
+            },
+            "wait_for": {
+                "name": "wait_for",
+                "in": "query",
+                "description": "CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "#content",
+                "x-ballerina-name": "waitFor"
+            },
+            "proxy": {
+                "name": "proxy",
+                "in": "query",
+                "description": "Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details.\n\n`auto` walks the tiers cheapest-first inside one request (datacenter, then residential, then stealth; anti-bot challenge pages skip straight to stealth) and bills only the tier that succeeded. Failed attempts are free. The API remembers, per domain, the cheapest tier that worked and starts there for 30 days, so repeat requests to a protected site do not re-pay the failed rungs in latency. Cannot be combined with `custom_proxy`\n",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "datacenter",
+                        "residential",
+                        "stealth",
+                        "auto"
+                    ],
+                    "default": "datacenter"
+                },
+                "example": "datacenter"
+            },
+            "country": {
+                "name": "country",
+                "in": "query",
+                "description": "Country of the proxy to use (US by default)",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "us",
+                        "gb",
+                        "de",
+                        "it",
+                        "fr",
+                        "ca",
+                        "es",
+                        "ru",
+                        "jp",
+                        "kr",
+                        "in",
+                        "hk",
+                        "tr"
+                    ],
+                    "default": "us"
+                },
+                "example": "us"
+            },
+            "custom_proxy": {
+                "name": "custom_proxy",
+                "in": "query",
+                "description": "Your own proxy URL to use instead of our built-in proxy pool in \"http://user:password@host:port\" format (<a target=\"_blank\" href=\"https://webscraping.ai/proxies/smartproxy\">Decodo</a>, formerly Smartproxy, for example)",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "http://user:password@proxy.example.com:8080",
+                "x-ballerina-name": "customProxy"
+            },
+            "device": {
+                "name": "device",
+                "in": "query",
+                "description": "Type of device emulation",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "desktop",
+                        "mobile",
+                        "tablet"
+                    ],
+                    "default": "desktop"
+                },
+                "example": "desktop"
+            },
+            "error_on_404": {
+                "name": "error_on_404",
+                "in": "query",
+                "description": "Return error on 404 HTTP status on the target page (false by default)",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "example": false,
+                "x-ballerina-name": "errorOn404"
+            },
+            "error_on_redirect": {
+                "name": "error_on_redirect",
+                "in": "query",
+                "description": "Return error on redirect on the target page (false by default)",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "example": false,
+                "x-ballerina-name": "errorOnRedirect"
+            },
+            "js_script": {
+                "name": "js_script",
+                "in": "query",
+                "description": "Custom JavaScript code to execute on the target page. It is evaluated as a script whose result is the value of its last expression (a top-level `return` is a syntax error), and it is only run by /html; the other endpoints accept the parameter but ignore it",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "document.querySelector('button').click();",
+                "x-ballerina-name": "jsScript"
+            },
+            "return_script_result": {
+                "name": "return_script_result",
+                "in": "query",
+                "description": "Return result of the custom JavaScript code (js_script parameter) execution on the target page (false by default, page HTML will be returned)",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "example": false,
+                "x-ballerina-name": "returnScriptResult"
+            },
+            "text_format": {
+                "name": "text_format",
+                "in": "query",
+                "description": "Format of the text response (plain by default). \"plain\" will return the page body content as Markdown. \"json\" and \"xml\" will return a json/xml with \"title\", \"description\" and \"content\" (Markdown) keys",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "plain",
+                        "xml",
+                        "json"
+                    ],
+                    "default": "plain"
+                },
+                "example": "plain",
+                "x-ballerina-name": "textFormat"
+            },
+            "return_links": {
+                "name": "return_links",
+                "in": "query",
+                "description": "[Works only with text_format=json] Return links from the page body text (false by default). Useful for building web crawlers",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "example": false,
+                "x-ballerina-name": "returnLinks"
+            },
+            "question": {
+                "name": "question",
+                "in": "query",
+                "description": "Question or instructions to ask the LLM model about the target page",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "What is the summary of this page content?"
+            },
+            "format": {
+                "name": "format",
+                "in": "query",
+                "description": "Format of the response (text by default). \"text\" returns the plain text/HTML response. \"json\" wraps it in a JSON object with a `result` key, for tools such as Zapier that only accept JSON",
+                "required": false,
+                "style": "form",
+                "explode": true,
+                "schema": {
+                    "type": "string",
+                    "enum": [
+                        "json",
+                        "text"
+                    ],
+                    "default": "text"
+                },
+                "example": "text"
+            }
+        },
+        "headers": {
+            "Wsai-Request-Id": {
+                "description": "Unique ID of this API request. Include it when contacting support about a specific request.",
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "example": "5b2a45c2-973f-443d-857c-6c21b05f35d5"
+            }
+        },
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "description": "WebScraping.AI API key supplied as the api_key query parameter",
+                "name": "api_key",
+                "in": "query",
+                "x-ballerina-name": "apiKey"
+            }
+        }
+    }
+}

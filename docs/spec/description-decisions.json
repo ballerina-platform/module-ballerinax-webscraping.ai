@@ -1,0 +1,26 @@
+{
+  "schemas": {
+    "Error": "Error details returned by the API",
+    "SerpResult": "Parsed search engine results page",
+    "DataResult": "Structured data extracted from a page on a supported site",
+    "Account": "Account quota and concurrency information"
+  },
+  "properties": {
+    "SerpResult.search_parameters": "The normalized parameters the search was run with",
+    "SerpResult.search_information": "Information the search engine reported about the search itself",
+    "SerpResult.search_parameters.engine": "Search engine the query was run on",
+    "SerpResult.search_parameters.q": "Search query",
+    "SerpResult.search_parameters.gl": "Country code the search was run for",
+    "SerpResult.search_parameters.hl": "Language code of the results",
+    "SerpResult.search_parameters.page": "Results page number",
+    "SerpResult.organic_results[].title": "Title of the search result",
+    "SerpResult.organic_results[].link": "URL of the search result",
+    "SerpResult.related_searches[].query": "Text of the related search suggestion",
+    "SerpResult.pagination": "Pagination links for the search results",
+    "SerpResult.pagination.current": "Current results page number",
+    "DataResult.request_parameters": "The URL as requested and how it was classified",
+    "DataResult.request_parameters.url": "The URL that was requested",
+    "Error.next_step": "The next configuration worth trying, with its price on current plans",
+    "Error.request_parameters": "The configuration the failed request ran with"
+  }
+}

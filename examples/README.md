@@ -2,13 +2,14 @@
 
 The `ballerinax/webscraping.ai` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+1. [Page content summarizer](./page_content_summarizer/page_content_summarizer.md) - Check the account quota, convert a web page to Markdown and ask an LLM a question about it.
+2. [Search result extractor](./search_result_extractor/search_result_extractor.md) - Run a search query and extract a structured field from the top result.
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. A WebScraping.AI API key. See the [setup guide](../ballerina/README.md#setup-guide).
+
+2. Create a `Config.toml` file in the example directory with the `apiKey` and the values listed in the example's document.
 
 ## Running an example
 
