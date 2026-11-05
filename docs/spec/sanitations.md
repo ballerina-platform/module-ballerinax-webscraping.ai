@@ -21,7 +21,7 @@ These changes are done in order to improve the overall usability, and as workaro
 
    _Reason_: Generated names were generic or verbose. The renames are persisted in `docs/spec/ai-mappings.json`.
 
-4. Fill missing schema and property descriptions in `docs/spec/openapi.yml` (schemas `Error`, `SerpResult`, `DataResult`, `Account`, and the properties of `SerpResult` and `DataResult` such as the search parameters, organic results, related searches, pagination and request parameters), applied from `docs/spec/description-decisions.json` with `tooling/apply_descriptions.py`.
+4. Fill missing schema and property descriptions in `docs/spec/openapi.yml` (schemas `Error`, `SerpResult`, `DataResult`, `Account`, and the properties of `SerpResult` and `DataResult` such as the search parameters, organic results, related searches, pagination and request parameters). The change was made in `docs/spec/openapi.yml`.
 
    _Reason_: Generated record fields without a description produce `undocumented field` warnings.
 

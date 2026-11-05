@@ -37,7 +37,7 @@ public isolated client class Client {
 
     # Get an answer to a question about a given web page
     #
-    # + headers - Headers to be sent with the request 
+    # + headers1 - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Parameters validation error 
     remote isolated function getAnswer(map<string|string[]> headers1 = {}, *GetAnswerQueries queries) returns string|error {
@@ -51,7 +51,7 @@ public isolated client class Client {
 
     # Extract structured data fields from a web page
     #
-    # + headers - Headers to be sent with the request 
+    # + headers1 - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Parameters validation error 
     remote isolated function getFields(map<string|string[]> headers1 = {}, *GetFieldsQueries queries) returns FieldsResult|error {
@@ -65,7 +65,7 @@ public isolated client class Client {
 
     # Page HTML by URL
     #
-    # + headers - Headers to be sent with the request 
+    # + headers1 - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Parameters validation error 
     remote isolated function getHtml(map<string|string[]> headers1 = {}, *GetHtmlQueries queries) returns string|error {
@@ -79,7 +79,7 @@ public isolated client class Client {
 
     # Page text by URL (Markdown)
     #
-    # + headers - Headers to be sent with the request 
+    # + headers1 - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Parameters validation error 
     remote isolated function getText(map<string|string[]> headers1 = {}, *GetTextQueries queries) returns string|error {
@@ -93,7 +93,7 @@ public isolated client class Client {
 
     # HTML of a selected page area by URL and CSS selector
     #
-    # + headers - Headers to be sent with the request 
+    # + headers1 - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Parameters validation error 
     remote isolated function getSelected(map<string|string[]> headers1 = {}, *GetSelectedQueries queries) returns string|error {
@@ -107,7 +107,7 @@ public isolated client class Client {
 
     # HTML of multiple page areas by URL and CSS selectors
     #
-    # + headers - Headers to be sent with the request 
+    # + headers1 - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Parameters validation error 
     remote isolated function getSelectedMultiple(map<string|string[]> headers1 = {}, *GetSelectedMultipleQueries queries) returns SelectedAreas|error {
