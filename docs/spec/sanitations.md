@@ -1,6 +1,6 @@
 _Author_:  @DimuthuMadushan \
 _Created_: 2026/10/22 \
-_Updated_: 2026/10/22 \
+_Updated_: 2026/11/05 \
 _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification
@@ -32,6 +32,10 @@ These changes are done in order to improve the overall usability, and as workaro
 6. Add `properties` to the object-typed query parameters `fields` (property `title`) and `headers` (property `Cookie`), keeping `additionalProperties`, in `docs/spec/openapi.yml`. The inline `fields` schema is named `FieldDescriptions` through `docs/spec/ai-mappings.json`.
 
    _Reason_: For a free-form `type: object` + `additionalProperties` query parameter the generator drops `style: deepObject`, so the client sent `?title=x` instead of `?fields[title]=x`. With a declared property it emits the `DEEPOBJECT` encoding map for `fields` and `headers`.
+
+7. Move the inline schema of the `headers` query parameter to a named `TargetPageHeaders` schema, and give the parameter `x-ballerina-name: targetPageHeaders`, in `docs/spec/openapi.yml`. The wire name stays `headers`.
+
+   _Reason_: The inline schema generated a public record named `headers` in lower case, and the query field reused that name. The `*Queries` records now carry `targetPageHeaders`, typed `TargetPageHeaders` and mapped to `headers` with `@http:Query`.
 
 ## OpenAPI cli command
 

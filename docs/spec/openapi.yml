@@ -610,14 +610,9 @@ components:
       name: headers
       description: "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})."
       example: { "Cookie": "session=some_id" }
+      x-ballerina-name: targetPageHeaders
       schema:
-        type: object
-        properties:
-          Cookie:
-            type: string
-            description: Cookie header value to send to the target page
-        additionalProperties:
-          type: string
+        $ref: "#/components/schemas/TargetPageHeaders"
       style: deepObject
       explode: true
     timeout:
@@ -758,6 +753,15 @@ components:
         enum: [ "json", "text" ]
 
   schemas:
+    TargetPageHeaders:
+      description: HTTP headers to send to the target page, keyed by header name
+      type: object
+      properties:
+        Cookie:
+          type: string
+          description: Cookie header value to send to the target page
+      additionalProperties:
+        type: string
     FieldsResult:
       description: Fields extracted from the web page, keyed by field name
       type: object

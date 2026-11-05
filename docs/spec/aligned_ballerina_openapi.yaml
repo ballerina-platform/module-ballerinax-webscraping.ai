@@ -602,6 +602,15 @@ paths:
                 remaining_concurrency: 100
 components:
   schemas:
+    TargetPageHeaders:
+      description: HTTP headers to send to the target page, keyed by header name
+      type: object
+      properties:
+        Cookie:
+          type: string
+          description: Cookie header value to send to the target page
+      additionalProperties:
+        type: string
     DataResult:
       title: Structured page data
       type: object
@@ -1058,14 +1067,9 @@ components:
       required: false
       style: deepObject
       explode: true
+      x-ballerina-name: targetPageHeaders
       schema:
-        type: object
-        properties:
-          Cookie:
-            type: string
-            description: Cookie header value to send to the target page
-        additionalProperties:
-          type: string
+        $ref: '#/components/schemas/TargetPageHeaders'
       example:
         Cookie: session=some_id
     timeout:

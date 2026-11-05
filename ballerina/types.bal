@@ -33,12 +33,6 @@ public type DataResult record {
     DataResultRequestParameters requestParameters?;
 };
 
-public type headers record {|
-    # Cookie header value to send to the target page
-    string Cookie?;
-    string...;
-|};
-
 # Account quota and concurrency information
 public type Account record {
     # Next billing cycle start time (UNIX timestamp)
@@ -80,7 +74,8 @@ public type SerpResultPagination record {
 # Represents the Queries record for the operation: getFields
 public type GetFieldsQueries record {
     # HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"})
-    headers headers?;
+    @http:Query {name: "headers"}
+    TargetPageHeaders targetPageHeaders?;
     # Country of the proxy to use (US by default)
     "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us";
     # Return error on 404 HTTP status on the target page (false by default)
@@ -118,6 +113,13 @@ public type GetFieldsQueries record {
     string customProxy?;
 };
 
+# HTTP headers to send to the target page, keyed by header name
+public type TargetPageHeaders record {|
+    # Cookie header value to send to the target page
+    string Cookie?;
+    string...;
+|};
+
 # A single organic search result
 public type OrganicResult record {
     # Result description snippet, when Google shows one
@@ -147,7 +149,8 @@ public type FieldDescriptions record {|
 # Represents the Queries record for the operation: getSelectedMultiple
 public type GetSelectedMultipleQueries record {
     # HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"})
-    headers headers?;
+    @http:Query {name: "headers"}
+    TargetPageHeaders targetPageHeaders?;
     # Country of the proxy to use (US by default)
     "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us";
     # Return error on 404 HTTP status on the target page (false by default)
@@ -230,7 +233,8 @@ public type SerpResult record {
 # Represents the Queries record for the operation: getSelected
 public type GetSelectedQueries record {
     # HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"})
-    headers headers?;
+    @http:Query {name: "headers"}
+    TargetPageHeaders targetPageHeaders?;
     # Country of the proxy to use (US by default)
     "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us";
     # Return error on 404 HTTP status on the target page (false by default)
@@ -301,7 +305,8 @@ public type SerpResultSearchInformation record {
 # Represents the Queries record for the operation: getHtml
 public type GetHtmlQueries record {
     # HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"})
-    headers headers?;
+    @http:Query {name: "headers"}
+    TargetPageHeaders targetPageHeaders?;
     # Country of the proxy to use (US by default)
     "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us";
     # Return error on 404 HTTP status on the target page (false by default)
@@ -364,7 +369,8 @@ public type GetDataQueries record {
 # Represents the Queries record for the operation: getAnswer
 public type GetAnswerQueries record {
     # HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"})
-    headers headers?;
+    @http:Query {name: "headers"}
+    TargetPageHeaders targetPageHeaders?;
     # Country of the proxy to use (US by default)
     "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us";
     # Question or instructions to ask the LLM model about the target page
@@ -413,7 +419,8 @@ public type FieldsResult record {
 # Represents the Queries record for the operation: getText
 public type GetTextQueries record {
     # HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"})
-    headers headers?;
+    @http:Query {name: "headers"}
+    TargetPageHeaders targetPageHeaders?;
     # Country of the proxy to use (US by default)
     "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us";
     # Return error on 404 HTTP status on the target page (false by default)

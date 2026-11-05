@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
   - `getData`, which returns structured data for a page on a supported site (`GetDataQueries`, `DataResult`, `DataResultRequestParameters`).
 - A `*Queries` record for each operation, such as `GetHtmlQueries` and `GetSelectedQueries`, which carries its query parameters.
 - New query parameters on the page methods: `country`, `device`, `jsTimeout`, `jsScript`, `waitFor`, `errorOn404`, `errorOnRedirect` and `customProxy`, plus `format` on `getHtml` and `getSelected` and `returnScriptResult` on `getHtml`.
-- The `headers` record, the type of the `headers` query parameter, which holds the HTTP headers to pass to the target page.
+- The `TargetPageHeaders` record, which holds the HTTP headers to pass to the target page.
 - New `Account` fields: `remainingTotalCredits`, `remainingPaygCredits`, `remainingMonthlyCredits` and `email`. `remainingApiCalls` is kept but deprecated.
 - An optional request-headers parameter on every remote method, for sending extra request headers. It is named `headers1` on the methods that already take a `headers` query parameter, and `headers` on the others.
 - New `ConnectionConfig` fields, taken from `http:ClientConfiguration`: `followRedirects`, `cookieConfig`, `socketConfig` and `laxDataBinding`.
@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
     string html = check scraper->getHtml(url = "https://example.com", timeout = 10000);
     ```
 
-- **Breaking:** the `headers` query parameter is a `headers` record (was `record {}?`).
+- **Breaking:** the `headers` query parameter is now the `targetPageHeaders` named argument, a `TargetPageHeaders` record (was `headers`, a `record {}?`). It is still sent as the `headers` query parameter.
 - **Breaking:** `proxy` is one of `"datacenter"`, `"residential"`, `"stealth"` or `"auto"` (was `string`).
 - **Breaking:** `timeout` defaults to 10000 ms (was 5000) and is constrained to 1–25000.
 - **Breaking:** `SelectedAreas` is `string[][]` (was `string[]`).
